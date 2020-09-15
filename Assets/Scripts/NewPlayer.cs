@@ -53,6 +53,7 @@ public class NewPlayer : MonoBehaviour
     {
         if(isGrounding)
         {
+            anim.SetTrigger("jump");
             rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse );
         }
     }
@@ -69,7 +70,6 @@ public class NewPlayer : MonoBehaviour
     void Update()
     {
         Movement();
-        anim.SetFloat("movement", AxisMagnitudeAbs);
     }
     void Movement()
     {
@@ -78,6 +78,12 @@ public class NewPlayer : MonoBehaviour
             transform.Translate( Vector3.forward * Time.deltaTime * moveSpeed);
             transform.rotation = Quaternion.LookRotation(new Vector3(Axis.x, 0f, Axis.y));
         }
+    }
+
+    void LateUpdate()
+    {
+        anim.SetFloat("movement", AxisMagnitudeAbs);
+        anim.SetBool("ground",isGrounding);
     }
     /// <summary>
     /// Retunrs the axis with H input and V Input.
